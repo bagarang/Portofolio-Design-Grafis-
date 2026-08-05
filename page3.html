@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Moh Reza Alhasny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            
+            /* Latar belakang yang sama dengan halaman sebelumnya agar konsisten */
+            background: linear-gradient(rgba(18, 18, 18, 0.90), rgba(18, 18, 18, 0.98)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            padding: 30px 5%;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar a:hover {
+            color: #ff4757;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 50px 8% 100px;
+            gap: 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* KOLOM KIRI: Cerita / Konten Teks */
+        .story-section {
+            flex: 1.2;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .section-subtitle {
+            color: #ff4757;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .story-block {
+            margin-bottom: 35px;
+        }
+
+        .story-block h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Aksen garis kecil di samping judul cerita */
+        .story-block h3::before {
+            content: '';
+            display: inline-block;
+            width: 25px;
+            height: 2px;
+            background-color: #ff4757;
+        }
+
+        .story-block p {
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: #b3b3b3;
+        }
+
+        /* Styling khusus untuk bagian Filosofi agar menonjol */
+        .philosophy-quote {
+            font-size: 1.2rem !important;
+            font-style: italic;
+            border-left: 3px solid #ff4757;
+            padding-left: 20px;
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .profile-section {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+
+        /* Wadah Foto Slideshow (Ukuran Disesuaikan) */
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 20px;
+        }
+
+        .image-frame {
+            position: absolute;
+            top: 15px;
+            right: -15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ff4757;
+            border-radius: 20px;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            background-color: #2a2a2a;
+        }
+
+        .main-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .main-photo.active {
+            opacity: 1;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 71, 87, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff4757;
+        }
+
+        .contact-info h4 {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 400;
+            margin-bottom: 3px;
+        }
+
+        .contact-info p, .contact-info a {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: #ff4757;
+        }
+
+        /* Efek Hover Parallax */
+        .image-wrapper:hover .image-frame {
+            transform: translate(-10px, -10px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .about-container {
+                flex-direction: column;
+                padding: 30px 5% 80px;
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .profile-section {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="page2.html">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Home
+        </a>
+    </nav>
+
+    <section class="about-container">
+        
+        <!-- Bagian Kiri: Cerita dan Filosofi -->
+        <div class="story-section">
+            <span class="section-subtitle">Di Balik Layar</span>
+            <h2 class="section-title">Kenali Saya<br>Lebih Dekat.</h2>
+
+            <div class="story-block">
+                <h3>Siapa Saya?</h3>
+                <p>
+                    Saya adalah seorang desainer grafis dan kreator visual yang percaya bahwa desain bukan sekadar tentang estetika, melainkan bahasa universal yang mampu menjembatani ide-ide abstrak menjadi pesan yang nyata. Dengan latar belakang di bidang <i>branding</i> dan UI Design, saya menggabungkan kreativitas intuitif dengan pemikiran analitis.
+                </p>
+            </div>
+
+            <div class="story-block">
+                <h3>Passion & Ketertarikan</h3>
+                <p>
+                    Hasrat terbesar saya terletak pada eksplorasi visual—mulai dari merancang identitas brand yang kuat, menyusun antarmuka yang ramah pengguna, hingga memanfaatkan teknologi kecerdasan buatan (AI) untuk mendorong batas kreativitas. Saya selalu antusias bereksperimen untuk menemukan sudut pandang baru dalam setiap kanvas kosong.
+                </p>
+            </div>
+
+            <div class="story-block">
+                <h3>Filosofi Desain</h3>
+                <p class="philosophy-quote">
+                    "Bentuk selalu mengikuti makna. Setiap garis, warna, dan piksel yang ditempatkan harus memiliki tujuan. Desain yang baik tidak hanya memanjakan mata, tetapi juga mampu menyelesaikan masalah dan bercerita dengan jujur."
+                </p>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            
+            <!-- Foto Slideshow (Menggunakan aset yang sama) -->
+            <div class="image-wrapper">
+                <div class="image-frame"></div>
+                <div class="slideshow-container">
+                    <img src="foto.jpg" alt="Moh Reza - Portrait" class="main-photo active" onerror="this.src='https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    <img src="foto1.jpg" alt="Moh Reza - Creative" class="main-photo" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                </div>
+            </div>
+
+            <!-- Kartu Kontak Elegan -->
+            <div class="contact-card">
+                <!-- Nama -->
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Nama</h4>
+                        <p>Moh Reza Al Hasny</p>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Email</h4>
+                        <a href="mailto:mohrezaalhasny@gmail.com">mohrezaalhasny@gmail.com</a>
+                    </div>
+                </div>
+
+                <!-- Telepon / WhatsApp -->
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>WhatsApp / Telepon</h4>
+                        <a href="https://wa.me/6281311893500" target="_blank">0813 11893500</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const photos = document.querySelectorAll('.main-photo');
+            let currentIndex = 0;
+
+            if(photos.length > 1) {
+                setInterval(() => {
+                    photos[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % photos.length;
+                    photos[currentIndex].classList.add('active');
+                }, 4000); 
+            }
+        });
+    </script>
+</body>
+</html>

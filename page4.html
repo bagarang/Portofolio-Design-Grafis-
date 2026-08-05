@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertise & Portfolio | Moh Reza Alhasny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            
+            /* Background konsisten dengan halaman sebelumnya */
+            background: linear-gradient(rgba(18, 18, 18, 0.90), rgba(18, 18, 18, 0.98)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            padding: 30px 5%;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar a:hover {
+            color: #ff4757;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 20px 20px 60px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .subtitle {
+            color: #ff4757;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .expertise-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 5% 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 120px; /* Jarak antar bagian (row) */
+        }
+
+        .skill-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .skill-row.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Membuat baris genap letaknya terbalik (Gambar di kiri, teks di kanan) */
+        .skill-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .skill-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        /* Aksen garis di samping kotak teks */
+        .skill-content::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 4px;
+            height: 40px;
+            background-color: #ff4757;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .skill-row:nth-child(even) .skill-content::before {
+            left: auto;
+            right: 0;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .skill-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .skill-content h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .skill-content p {
+            font-size: 1.05rem;
+            color: #a0a0a0;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .skill-visual {
+            flex: 1;
+            position: relative;
+        }
+
+        .single-image-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .single-image-wrapper img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 4/3;
+            display: block;
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .single-image-wrapper:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .logo-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .logo-gallery .logo-item {
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-gallery .logo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .logo-gallery .logo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Gambar logo pertama dibuat lebih besar membentang 2 kolom */
+        .logo-gallery .logo-item:nth-child(1) {
+            grid-column: span 2;
+            aspect-ratio: 21/9;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 992px) {
+            .expertise-container {
+                gap: 80px;
+            }
+            /* Memaksa layout menjadi atas-bawah di layar kecil, terlepas baris ganjil/genap */
+            .skill-row, .skill-row:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .skill-content::before {
+                display: none; /* Hilangkan garis pinggir di mode HP */
+            }
+            .skill-content {
+                padding: 30px 20px;
+                order: 2; /* Teks di bawah */
+            }
+            .skill-visual {
+                order: 1; /* Gambar di atas */
+                width: 100%;
+            }
+            .skill-icon {
+                margin: 0 auto 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="page2.html">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Home
+        </a>
+    </nav>
+
+    <header class="page-header">
+        <span class="subtitle">What I Do Best</span>
+        <h2 class="title">Expertise & Selected Works</h2>
+    </header>
+
+    <div class="expertise-container">
+        
+        <!-- 1. GRAPHIC DESIGN -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                </div>
+                <h3>Graphic Design</h3>
+                <p>Menciptakan komposisi visual yang estetik dan komunikatif untuk berbagai medium. Fokus pada harmoni warna, tipografi, dan tata letak untuk menyampaikan pesan secara efektif dan memikat audiens sasaran Anda.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menyandingkan dengan ilus01 -->
+                    <img src="ilus01.jpg" alt="Graphic Design Portfolio" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. BRANDING (Baris Genap: Gambar akan otomatis di kiri) -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                </div>
+                <h3>Branding</h3>
+                <p>Membangun identitas visual yang kuat, kohesif, dan tak terlupakan. Mulai dari penyusunan konsep dasar, palet warna psikologis, hingga pembuatan panduan gaya (*brand guidelines*) yang mencerminkan nyawa sebuah perusahaan.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menyandingkan dengan ilus02 -->
+                    <img src="ilus02.jpg" alt="Branding Portfolio" onerror="this.src='https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. LOGO DESIGN (Khusus Logo menggunakan Grid 5 Gambar) -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                </div>
+                <h3>Logo Design</h3>
+                <p>Merancang simbol yang ikonik, representatif, dan tak lekang oleh waktu (*timeless*). Menciptakan logo dari sketsa hingga digitalisasi vektor yang akan menjadi wajah utama serta aset paling berharga dari sebuah entitas bisnis.</p>
+            </div>
+            <div class="skill-visual">
+                <!-- Grid Collage untuk LD01 - LD05 -->
+                <div class="logo-gallery">
+                    <div class="logo-item"><img src="LD01.png" alt="Logo 1" onerror="this.src='https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=600&q=80'"></div>
+                    <div class="logo-item"><img src="LD02.png" alt="Logo 2" onerror="this.src='https://images.unsplash.com/photo-1558655146-d09347e92766?w=400&q=80'"></div>
+                    <div class="logo-item"><img src="LD03.png" alt="Logo 3" onerror="this.src='https://images.unsplash.com/photo-1616423640778-28d1b53229bd?w=400&q=80'"></div>
+                    <div class="logo-item"><img src="LD04.png" alt="Logo 4" onerror="this.src='https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=400&q=80'"></div>
+                    <div class="logo-item"><img src="LD05.png" alt="Logo 5" onerror="this.src='https://images.unsplash.com/photo-1561089489-f13d5e730d72?w=400&q=80'"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. POSTER DESIGN (Baris Genap: Gambar otomatis di kiri) -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </div>
+                <h3>Poster Design</h3>
+                <p>Menyampaikan pesan kampanye, promosi, atau acara melalui desain cetak maupun digital yang mencolok mata. Didukung dengan pengaturan hierarki visual dan tipografi yang memastikan informasi penting terbaca dalam hitungan detik.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menyandingkan dengan ilus03 -->
+                    <img src="ilus03.jpg" alt="Poster Portfolio" onerror="this.src='https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. SOCIAL MEDIA -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </div>
+                <h3>Social Media</h3>
+                <p>Memproduksi aset visual (*feeds, stories, reels cover*) yang interaktif dan *engaging* untuk platform sosial media. Memadukan tren desain terkini dengan algoritma platform untuk meningkatkan *brand awareness* dan interaksi pengguna.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menyandingkan dengan ilus04 -->
+                    <img src="ilus04.jpg" alt="Social Media Portfolio" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PACKAGING (Baris Genap) -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <h3>Packaging</h3>
+                <p>Mendesain bentuk dan balutan visual kemasan produk yang tidak hanya aman dan fungsional, tetapi juga memberikan pengalaman *unboxing* yang mewah dan berkesan, sekaligus menjadi daya pamer (*selling point*) utama di rak ritel.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menyandingkan dengan ilus05 -->
+                    <img src="ilus05.jpg" alt="Packaging Portfolio" onerror="this.src='https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. UI/UX DESIGN (Karena ilus01-05 sudah dipakai semua, saya kembali menggunakan ilus01 atau gambar fallback estetik sebagai penutup) -->
+        <div class="skill-row">
+            <div class="skill-content">
+                <div class="skill-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                </div>
+                <h3>UI/UX Design</h3>
+                <p>Merancang antarmuka aplikasi atau *website* yang intuitif, estetis, dan *user-friendly*. Berfokus pada kemudahan navigasi pengguna (*user flow*), kenyamanan visual, dan menjamin pengalaman interaksi digital yang mulus dan memuaskan.</p>
+            </div>
+            <div class="skill-visual">
+                <div class="single-image-wrapper">
+                    <!-- Menggunakan ilus01 lagi sebagai representasi UI/UX, karena ilus terbatas 1-5 -->
+                    <img src="ilus01.jpg" alt="UI/UX Portfolio" onerror="this.src='https://images.unsplash.com/photo-1561089489-f13d5e730d72?w=800&q=80'">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fungsi Intersection Observer untuk memunculkan elemen saat di-scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        // Optional: Unobserve setelah animasi berjalan sekali
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15 // Animasi mulai saat 15% elemen terlihat di layar
+            });
+
+            // Targetkan semua baris keahlian
+            const skillRows = document.querySelectorAll('.skill-row');
+            skillRows.forEach(row => {
+                observer.observe(row);
+            });
+        });
+    </script>
+</body>
+</html>

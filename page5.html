@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Portfolio | Moh Reza Alhasny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            background: linear-gradient(rgba(18, 18, 18, 0.90), rgba(18, 18, 18, 0.98)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            padding: 30px 5%;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar a:hover {
+            color: #ff4757;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 20px 20px 60px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .subtitle {
+            color: #ff4757;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .portfolio-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 5% 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Efek staggered untuk animasi kartu */
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.3s; }
+        .project-card:nth-child(3) { animation-delay: 0.5s; }
+        .project-card:nth-child(4) { animation-delay: 0.7s; }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.08);
+        }
+
+        .project-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .client-info {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .project-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .btn-view {
+            padding: 12px 0;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-view:hover {
+            background: #ff4757;
+            border-color: #ff4757;
+            color: #ffffff;
+        }
+
+        /* --- POPUP / MODAL CSS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 20px;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #ff4757;
+        }
+
+        .modal-header-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .meta-item h4 {
+            font-size: 0.8rem;
+            color: #ff4757;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .meta-item p {
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .modal-body h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .modal-body .full-desc {
+            color: #b3b3b3;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-section-title {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin: 40px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 71, 87, 0.3);
+            display: inline-block;
+        }
+
+        .modal-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 1; /* Membuat frame gambar berbentuk kotak */
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .modal-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .modal-gallery-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.7);
+        }
+
+        /* Overlay untuk tombol View on IG */
+        .ig-link-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4757;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            pointer-events: none; /* Supaya klik tembus ke tag <a> pembungkus */
+        }
+
+        .modal-gallery-item:hover .ig-link-overlay {
+            opacity: 1;
+            transform: translate(-50%, -40%);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2.8rem; }
+            .modal-meta-grid { grid-template-columns: 1fr; gap: 15px; }
+            .modal-header-img { height: 250px; }
+            .modal-body { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="page2.html">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Home
+        </a>
+    </nav>
+
+    <header class="page-header">
+        <span class="subtitle">Best of the Best</span>
+        <h2 class="title">Featured Portfolio</h2>
+    </header>
+
+    <section class="portfolio-container">
+        
+        <!-- PROJECT 1: GAURA SKIN CLINIC -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/GAURA/GF01.jpg" alt="Gaura Skin Clinic" onerror="this.src='https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">Print & Digital</span>
+                    <span class="client-info">Klien: Gaura Skin Clinic</span>
+                </div>
+                <h3 class="project-title">Gaura Skin Clinic Visual Assets</h3>
+                <p class="project-desc">Materi promosi cetak dan digital untuk klinik kecantikan, meliputi flyer, social media post, hingga ucapan hari raya dengan visual yang estetik dan clean.</p>
+                <button class="btn-view" onclick="openModal('modal-1')">View Project Detail</button>
+            </div>
+        </div>
+
+        <!-- PROJECT 2: NILAM WIDURI FRAGRANCE -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/NW/flayerNW (1).jpg" alt="Nilam Widuri Fragrance" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">Campaign & Branding</span>
+                    <span class="client-info">Klien: Nilam Widuri</span>
+                </div>
+                <h3 class="project-title">Nilam Widuri Fragrance</h3>
+                <p class="project-desc">Visual grafis premium untuk brand parfum, mencakup product flyer, konten interaktif di feed sosial media, hingga seasonal greetings.</p>
+                <button class="btn-view" onclick="openModal('modal-2')">View Project Detail</button>
+            </div>
+        </div>
+
+        <!-- PROJECT 3: DMID -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/DMID/thumb1.jpg" alt="DMID Content Creator" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">Content Creator</span>
+                    <span class="client-info">Klien: DMID</span>
+                </div>
+                <h3 class="project-title">DMID Interactive Content</h3>
+                <p class="project-desc">Memproduksi konten visual dan video yang engaging untuk kebutuhan kampanye sosial media DMID. Konsep berfokus pada interaksi audiens.</p>
+                <button class="btn-view" onclick="openModal('modal-3')">View Project Detail</button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MODAL 1: GAURA SKIN CLINIC -->
+    <div class="modal-overlay" id="modal-1" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-1')">&times;</button>
+            <img src="Job/GAURA/GF01.jpg" alt="Gaura Skin Clinic Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>Gaura Skin Clinic Visual Assets</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>Gaura Skin Clinic</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>Graphic Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Flyer, Social Media, Greetings</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    Gaura Skin Clinic membutuhkan visual yang bersih (clean) dan profesional. Pada project ini, saya merancang materi promosi dari offline hingga digital.
+                </p>
+
+                <h3 class="modal-section-title">1. Print Flyer Design</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item"><img src="Job/GAURA/GF01.jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF01'"></div>
+                    <div class="modal-gallery-item"><img src="Job/GAURA/GF02.jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF02'"></div>
+                    <div class="modal-gallery-item"><img src="Job/GAURA/GF03.jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF03'"></div>
+                </div>
+
+                <h3 class="modal-section-title">2. Social Media Flyer Design</h3>
+                <p class="full-desc">Klik gambar untuk melihat postingan asli di Instagram.</p>
+                <div class="modal-gallery-grid">
+                    <a href="https://www.instagram.com/p/DVVCjS3EStq/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/GAURA/SMG01.jpg" alt="SM 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SMG01'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DT4jiTPkXmA/?hl=en&img_index=1" target="_blank" class="modal-gallery-item">
+                        <img src="Job/GAURA/SM02.jpg" alt="SM 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SM02'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DTuNAyjER4g/?hl=en&img_index=1" target="_blank" class="modal-gallery-item">
+                        <img src="Job/GAURA/SM03.jpg" alt="SM 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SM03'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: NILAM WIDURI FRAGRANCE -->
+    <div class="modal-overlay" id="modal-2" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-2')">&times;</button>
+            <img src="Job/NW/flayerNW (1).jpg" alt="Nilam Widuri Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>Nilam Widuri Fragrance</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>Nilam Widuri</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>Graphic Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Flyer, IG Feed, Festive Greetings</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    Nilam Widuri Fragrance menonjolkan kemewahan. Proyek ini meliputi perancangan visual mulai dari brosur hingga konten media sosial yang konsisten.
+                </p>
+
+                <h3 class="modal-section-title">1. Product Flyer Design</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (1).jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+1'"></div>
+                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (2).jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+2'"></div>
+                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (3).jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+3'"></div>
+                </div>
+
+                <h3 class="modal-section-title">2. Social Media Campaign</h3>
+                <p class="full-desc">Klik gambar untuk melihat postingan asli di Instagram.</p>
+                <div class="modal-gallery-grid">
+                    <a href="https://www.instagram.com/p/DT-EHhvj2-r/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/NW/SM01.jpg" alt="SM 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SM01'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DTH_cZPj-6x/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/NW/SM02.jpg" alt="SM 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SM02'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DJkXaWGzpXi/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/NW/SM03.jpg" alt="SM 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=SM03'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                </div>
+
+                <h3 class="modal-section-title">3. Festive / Seasonal Greetings</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item"><img src="Job/NW/HN01.jpg" alt="Greeting 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN01'"></div>
+                    <div class="modal-gallery-item"><img src="Job/NW/HN02.jpg" alt="Greeting 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN02'"></div>
+                    <div class="modal-gallery-item"><img src="Job/NW/HN03.jpg" alt="Greeting 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN03'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: DMID -->
+    <div class="modal-overlay" id="modal-3" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-3')">&times;</button>
+            <img src="Job/DMID/thumb1.jpg" alt="DMID Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>DMID Interactive Content</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>DMID</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>Content Creator</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Social Media Posts, Reels/Video</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    Bertanggung jawab dalam memproduksi aset kreatif sosial media sebagai Content Creator, berfokus pada visual yang menarik *engagement* dari target audiens.
+                </p>
+
+                <h3 class="modal-section-title">Instagram Content Showcase</h3>
+                <p class="full-desc">Pilih thumbnail di bawah ini untuk menuju ke postingan live di Instagram.</p>
+                
+                <div class="modal-gallery-grid">
+                    <a href="https://www.instagram.com/p/DNr2a3HZh6z/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/DMID/thumb1.jpg" alt="DMID Post 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+1'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DNcB3a7yUam/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/DMID/thumb2.jpg" alt="DMID Post 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+2'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DM1cyxGy4W3/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/DMID/thumb3.jpg" alt="DMID Post 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+3'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DLJZoIuSfOf/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/DMID/thumb4.jpg" alt="DMID Post 4" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+4'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                    <a href="https://www.instagram.com/p/DKRL0rlShUS/?hl=en" target="_blank" class="modal-gallery-item">
+                        <img src="Job/DMID/thumb5.jpg" alt="DMID Post 5" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+5'">
+                        <span class="ig-link-overlay">View on IG</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk membuka modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                // Mencegah scroll pada body saat modal terbuka
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal(event, elementInfo) {
+            // Jika elementInfo adalah string (ID modal), ambil elemennya
+            let modal = typeof elementInfo === 'string' ? document.getElementById(elementInfo) : elementInfo;
+            
+            if (modal) {
+                modal.classList.remove('active');
+                // Mengembalikan fungsi scroll pada body
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>

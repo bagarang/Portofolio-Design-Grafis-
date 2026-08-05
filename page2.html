@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil | Moh Reza Alhasny</title>
+    <!-- Font Poppins yang sama dengan index.html -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Reset Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            
+            /* INI KUNCINYA: Menggunakan background yang sama dengan index.html agar temanya menyatu,
+               namun overlay sedikit lebih gelap (0.90 & 0.95) agar teks panjang lebih mudah dibaca */
+            background: linear-gradient(rgba(18, 18, 18, 0.90), rgba(18, 18, 18, 0.98)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            padding: 30px 5%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .navbar a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar a:hover {
+            color: #ff4757;
+        }
+
+        .about-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 85vh; /* Disesuaikan agar galeri di bawahnya sedikit terlihat / mengintip */
+            padding: 100px 8% 50px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .text-content {
+            flex: 1;
+            max-width: 650px;
+            /* Menggunakan animasi yang senada dengan halaman 1 */
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: #ff4757; /* Warna aksen coral dari halaman 1 */
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .name {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            /* Gradien teks yang sama persis dengan index.html */
+            background: linear-gradient(90deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .roles {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #cccccc;
+            margin-bottom: 30px;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Titik pemisah antar role */
+        .roles span {
+            color: #ff4757;
+            font-weight: bold;
+        }
+
+        .value-prop {
+            font-size: 1.3rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: #a0a0a0;
+            margin-bottom: 45px;
+            border-left: 2px solid #ff4757;
+            padding-left: 20px;
+        }
+
+        .btn-group {
+            /* Diubah menjadi grid agar 4 tombol sangat simetris dan rapi */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 400px; 
+        }
+
+        .btn {
+            padding: 15px 10px;
+            text-align: center; /* Memastikan teks tombol selalu berada di tengah */
+            font-size: 1.05rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* Tombol Primary (Persis seperti Start Exploration di index) */
+        .btn-primary {
+            background-color: #ffffff;
+            color: #121212;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #ff4757;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+            transform: translateY(-4px);
+        }
+
+        /* Tombol Secondary (Gaya outline/glassmorphism) */
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .visual-content {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.2s;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 3/4;
+            border-radius: 20px;
+        }
+
+        /* Efek Frame / Garis di belakang foto */
+        .image-frame {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ff4757;
+            border-radius: 20px;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+
+        /* Bagian Gallery Ilustrasi di Bawah */
+        .illustrations-section {
+            padding: 0 8% 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 1.2s ease-out 0.6s forwards; /* Muncul sedikit lebih lambat dari konten atas */
+            opacity: 0;
+        }
+
+        .gallery-title {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .illus-item {
+            width: calc(20% - 16px); /* Membagi 5 gambar dalam 1 baris */
+            min-width: 140px;
+            aspect-ratio: 1; /* Membuat frame gambar menjadi persegi (kotak sempurna) */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .illus-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .illus-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
+        }
+
+        .illus-item:hover img {
+            transform: scale(1.1); /* Efek zoom in pada gambar */
+            filter: brightness(1.2);
+        }
+
+        /* Container untuk foto utama agar bisa bergantian */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s ease;
+            background-color: #2a2a2a; /* Fallback color */
+            overflow: hidden;
+        }
+
+        /* Foto Utama (foto.jpg, foto1.jpg) */
+        .main-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Secara default transparan */
+            transition: opacity 1.5s ease-in-out; /* Transisi memudar yang halus */
+        }
+
+        /* Class untuk menampilkan foto yang sedang aktif */
+        .main-photo.active {
+            opacity: 1;
+        }
+
+        /* Efek Hover Parallax yang Artistik */
+        .image-wrapper:hover .slideshow-container {
+            transform: translate(-10px, -10px);
+        }
+
+        .image-wrapper:hover .image-frame {
+            transform: translate(15px, 15px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 120px 5% 50px;
+            }
+
+            .name {
+                font-size: 3.5rem;
+            }
+
+            .roles {
+                justify-content: center;
+            }
+
+            .value-prop {
+                border-left: none;
+                padding-left: 0;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .btn-group {
+                justify-content: center;
+                margin: 0 auto; /* Menengahkan posisi 4 tombol grid saat tampilan mobile */
+            }
+
+            .visual-content {
+                justify-content: center;
+                margin-top: 50px;
+            }
+            
+            .image-wrapper {
+                max-width: 350px;
+            }
+
+            .illus-item {
+                width: calc(33.33% - 14px); /* Tampilkan 3 gambar sebaris di tablet */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .illus-item {
+                width: calc(50% - 10px); /* Tampilkan 2 gambar sebaris di HP */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi Sederhana -->
+    <nav class="navbar">
+        <a href="index.html">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Intro
+        </a>
+    </nav>
+
+    <!-- Section Utama -->
+    <section class="about-section">
+        
+        <!-- Kolom Kiri: Teks -->
+        <div class="text-content">
+            <span class="greeting">Who Am I</span>
+            
+            <!-- 1. Siapa Kamu? -->
+            <h1 class="name">Moh Reza<br>Alhasny</h1>
+            
+            <!-- 2. Mengerjakan Apa? -->
+            <div class="roles">
+                Graphic Designer <span>•</span> 
+                Branding <span>•</span> 
+                UI Designer <span>•</span> 
+                AI Creative
+            </div>
+            
+            <!-- 3. Kenapa memilihmu? (Dengan sedikit polesan copywriting) -->
+            <p class="value-prop">
+                "I don't just design; I create visual experiences. Menerjemahkan ide-ide kompleks menjadi visual estetik yang komunikatif untuk membangun brand yang tak terlupakan."
+            </p>
+            
+            <!-- Button CTA Baru yang presisi dan simetris -->
+            <div class="btn-group">
+                <a href="page3.html" class="btn btn-primary">About me</a>
+                <a href="page4.html" class="btn btn-secondary">Skill</a>
+                <a href="page5.html" class="btn btn-secondary">Portofolio</a>
+                <a href="page6.html" class="btn btn-primary">Contact me</a>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Visual -->
+        <div class="visual-content">
+            <div class="image-wrapper">
+                <!-- Garis bingkai aksen (elemen UI) -->
+                <div class="image-frame"></div>
+                
+                <!-- Slideshow Foto Profil Utama -->
+                <div class="slideshow-container">
+                    <!-- Foto 1 (Default Aktif) -->
+                    <img src="foto.jpg" alt="Moh Reza - Profil 1" class="main-photo active" onerror="this.src='https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    
+                    <!-- Foto 2 -->
+                    <img src="foto1.jpg" alt="Moh Reza - Profil 2" class="main-photo" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    
+                    <!-- Anda bisa menambahkan foto3.jpg, foto4.jpg dst di bawah sini dengan class "main-photo" -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Section Gallery Ilustrasi di Bawah -->
+    <section class="illustrations-section">
+        <h3 class="gallery-title">Visual Aesthetic</h3>
+        <div class="gallery-grid">
+            <div class="illus-item">
+                <img src="ilus01.jpg" alt="Ilustrasi 1" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80'">
+            </div>
+            <div class="illus-item">
+                <img src="ilus02.jpg" alt="Ilustrasi 2" onerror="this.src='https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=400&q=80'">
+            </div>
+            <div class="illus-item">
+                <img src="ilus03.jpg" alt="Ilustrasi 3" onerror="this.src='https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=400&q=80'">
+            </div>
+            <div class="illus-item">
+                <img src="ilus04.jpg" alt="Ilustrasi 4" onerror="this.src='https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=400&q=80'">
+            </div>
+            <div class="illus-item">
+                <img src="ilus05.jpg" alt="Ilustrasi 5" onerror="this.src='https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=400&q=80'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Script untuk menjalankan Slideshow Foto -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const photos = document.querySelectorAll('.main-photo');
+            let currentIndex = 0;
+
+            // Jalankan hanya jika ada lebih dari 1 foto
+            if(photos.length > 1) {
+                // Ganti foto setiap 4 detik (4000 milidetik)
+                setInterval(() => {
+                    // Hilangkan class 'active' dari foto saat ini agar memudar perlahan
+                    photos[currentIndex].classList.remove('active');
+                    
+                    // Lanjut ke indeks foto berikutnya, jika di ujung akan kembali ke foto awal (indeks 0)
+                    currentIndex = (currentIndex + 1) % photos.length;
+                    
+                    // Tambahkan class 'active' ke foto yang baru agar muncul
+                    photos[currentIndex].classList.add('active');
+                }, 4000); 
+            }
+        });
+    </script>
+
+</body>
+</html>
