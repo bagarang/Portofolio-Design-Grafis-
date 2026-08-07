@@ -327,7 +327,7 @@
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-            aspect-ratio: 1; /* Membuat frame gambar berbentuk kotak */
+            aspect-ratio: 1;
             background: #1a1a1a;
             border: 1px solid rgba(255,255,255,0.05);
         }
@@ -344,7 +344,6 @@
             filter: brightness(0.7);
         }
 
-        /* Overlay untuk tombol View on IG */
         .ig-link-overlay {
             position: absolute;
             top: 50%;
@@ -362,7 +361,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            pointer-events: none; /* Supaya klik tembus ke tag <a> pembungkus */
+            pointer-events: none;
         }
 
         .modal-gallery-item:hover .ig-link-overlay {
@@ -444,6 +443,22 @@
                 <h3 class="project-title">DMID Interactive Content</h3>
                 <p class="project-desc">Memproduksi konten visual dan video yang engaging untuk kebutuhan kampanye sosial media DMID. Konsep berfokus pada interaksi audiens.</p>
                 <button class="btn-view" onclick="openModal('modal-3')">View Project Detail</button>
+            </div>
+        </div>
+
+        <!-- PROJECT 4: PRODUCT REDESIGN -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/Redesign/001.png" alt="Product Redesign" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">UI/UX & Redesign</span>
+                    <span class="client-info">Klien: Product Redesign Project</span>
+                </div>
+                <h3 class="project-title">Product Redesign</h3>
+                <p class="project-desc">Transformasi dan perombakan antarmuka produk secara menyeluruh untuk mengoptimalkan pengalaman pengguna (UX) dengan standar estetika visual modern.</p>
+                <button class="btn-view" onclick="openModal('modal-4')">View Project Detail</button>
             </div>
         </div>
 
@@ -588,7 +603,7 @@
                 </div>
 
                 <p class="full-desc">
-                    Bertanggung jawab dalam memproduksi aset kreatif sosial media sebagai Content Creator, berfokus pada visual yang menarik *engagement* dari target audiens.
+                    Bertanggung jawab dalam memproduksi aset kreatif sosial media sebagai Content Creator, berfokus pada visual yang menarik <em>engagement</em> dari target audiens.
                 </p>
 
                 <h3 class="modal-section-title">Instagram Content Showcase</h3>
@@ -615,6 +630,50 @@
                         <img src="Job/DMID/thumb5.jpg" alt="DMID Post 5" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Thumbnail+5'">
                         <span class="ig-link-overlay">View on IG</span>
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: PRODUCT REDESIGN -->
+    <div class="modal-overlay" id="modal-4" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-4')">&times;</button>
+            <img src="Job/Redesign/001.png" alt="Product Redesign Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>Product Redesign</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>Internal / Concept Project</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>UI/UX & Product Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Wireframing, UI Design, Redesign Assets</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    Proyek Product Redesign ini berfokus pada evaluasi mendalam terhadap antarmuka produk yang sudah ada, kemudian merombaknya agar lebih intuitif, modern, dan memberikan pengalaman pengguna terbaik berdasarkan prinsip desain mutakhir.
+                </p>
+
+                <h3 class="modal-section-title">Redesign Showcase Gallery (001 - 010)</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item"><img src="Job/Redesign/001.png" alt="Redesign 001" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=001.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/002.png" alt="Redesign 002" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=002.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/003.png" alt="Redesign 003" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=003.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/004.png" alt="Redesign 004" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=004.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/005.png" alt="Redesign 005" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=005.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/006.png" alt="Redesign 006" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=006.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/007.png" alt="Redesign 007" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=007.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/008.png" alt="Redesign 008" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=008.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/009.png" alt="Redesign 009" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=009.png'"></div>
+                    <div class="modal-gallery-item"><img src="Job/Redesign/010.png" alt="Redesign 010" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=010.png'"></div>
                 </div>
             </div>
         </div>
