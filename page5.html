@@ -96,7 +96,6 @@
             opacity: 0;
         }
 
-        /* Efek staggered untuk animasi kartu */
         .project-card:nth-child(1) { animation-delay: 0.1s; }
         .project-card:nth-child(2) { animation-delay: 0.3s; }
         .project-card:nth-child(3) { animation-delay: 0.5s; }
@@ -265,6 +264,12 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .modal-header-img:hover {
+            opacity: 0.9;
         }
 
         .modal-body {
@@ -330,6 +335,7 @@
             aspect-ratio: 1;
             background: #1a1a1a;
             border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
         }
 
         .modal-gallery-item img {
@@ -361,12 +367,74 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            pointer-events: none;
         }
 
         .modal-gallery-item:hover .ig-link-overlay {
             opacity: 1;
             transform: translate(-50%, -40%);
+        }
+
+        /* --- IMAGE LIGHTBOX (ZOOM POPUP) CSS --- */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: #ff4757;
         }
 
         @keyframes fadeInUp {
@@ -468,7 +536,7 @@
     <div class="modal-overlay" id="modal-1" onclick="closeModal(event, this)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event, 'modal-1')">&times;</button>
-            <img src="Job/GAURA/GF01.jpg" alt="Gaura Skin Clinic Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80'">
+            <img src="Job/GAURA/GF01.jpg" alt="Gaura Skin Clinic Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80'">
             <div class="modal-body">
                 <h2>Gaura Skin Clinic Visual Assets</h2>
                 
@@ -493,9 +561,9 @@
 
                 <h3 class="modal-section-title">1. Print Flyer Design</h3>
                 <div class="modal-gallery-grid">
-                    <div class="modal-gallery-item"><img src="Job/GAURA/GF01.jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF01'"></div>
-                    <div class="modal-gallery-item"><img src="Job/GAURA/GF02.jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF02'"></div>
-                    <div class="modal-gallery-item"><img src="Job/GAURA/GF03.jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF03'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/GAURA/GF01.jpg', 'Flyer 1')"><img src="Job/GAURA/GF01.jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF01'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/GAURA/GF02.jpg', 'Flyer 2')"><img src="Job/GAURA/GF02.jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF02'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/GAURA/GF03.jpg', 'Flyer 3')"><img src="Job/GAURA/GF03.jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=GF03'"></div>
                 </div>
 
                 <h3 class="modal-section-title">2. Social Media Flyer Design</h3>
@@ -522,7 +590,7 @@
     <div class="modal-overlay" id="modal-2" onclick="closeModal(event, this)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event, 'modal-2')">&times;</button>
-            <img src="Job/NW/flayerNW (1).jpg" alt="Nilam Widuri Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80'">
+            <img src="Job/NW/flayerNW (1).jpg" alt="Nilam Widuri Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80'">
             <div class="modal-body">
                 <h2>Nilam Widuri Fragrance</h2>
                 
@@ -547,9 +615,9 @@
 
                 <h3 class="modal-section-title">1. Product Flyer Design</h3>
                 <div class="modal-gallery-grid">
-                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (1).jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+1'"></div>
-                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (2).jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+2'"></div>
-                    <div class="modal-gallery-item"><img src="Job/NW/flayerNW (3).jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+3'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/flayerNW (1).jpg', 'Flyer NW 1')"><img src="Job/NW/flayerNW (1).jpg" alt="Flyer 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+1'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/flayerNW (2).jpg', 'Flyer NW 2')"><img src="Job/NW/flayerNW (2).jpg" alt="Flyer 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+2'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/flayerNW (3).jpg', 'Flyer NW 3')"><img src="Job/NW/flayerNW (3).jpg" alt="Flyer 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=Flyer+NW+3'"></div>
                 </div>
 
                 <h3 class="modal-section-title">2. Social Media Campaign</h3>
@@ -571,9 +639,9 @@
 
                 <h3 class="modal-section-title">3. Festive / Seasonal Greetings</h3>
                 <div class="modal-gallery-grid">
-                    <div class="modal-gallery-item"><img src="Job/NW/HN01.jpg" alt="Greeting 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN01'"></div>
-                    <div class="modal-gallery-item"><img src="Job/NW/HN02.jpg" alt="Greeting 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN02'"></div>
-                    <div class="modal-gallery-item"><img src="Job/NW/HN03.jpg" alt="Greeting 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN03'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/HN01.jpg', 'Greeting 1')"><img src="Job/NW/HN01.jpg" alt="Greeting 1" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN01'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/HN02.jpg', 'Greeting 2')"><img src="Job/NW/HN02.jpg" alt="Greeting 2" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN02'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/NW/HN03.jpg', 'Greeting 3')"><img src="Job/NW/HN03.jpg" alt="Greeting 3" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=HN03'"></div>
                 </div>
             </div>
         </div>
@@ -583,7 +651,7 @@
     <div class="modal-overlay" id="modal-3" onclick="closeModal(event, this)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event, 'modal-3')">&times;</button>
-            <img src="Job/DMID/thumb1.jpg" alt="DMID Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80'">
+            <img src="Job/DMID/thumb1.jpg" alt="DMID Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80'">
             <div class="modal-body">
                 <h2>DMID Interactive Content</h2>
                 
@@ -639,7 +707,7 @@
     <div class="modal-overlay" id="modal-4" onclick="closeModal(event, this)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event, 'modal-4')">&times;</button>
-            <img src="Job/Redesign/001.png" alt="Product Redesign Detail" class="modal-header-img" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=1200&q=80'">
+            <img src="Job/Redesign/001.png" alt="Product Redesign Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=1200&q=80'">
             <div class="modal-body">
                 <h2>Product Redesign</h2>
                 
@@ -664,41 +732,64 @@
 
                 <h3 class="modal-section-title">Redesign Showcase Gallery (001 - 010)</h3>
                 <div class="modal-gallery-grid">
-                    <div class="modal-gallery-item"><img src="Job/Redesign/001.png" alt="Redesign 001" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=001.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/002.png" alt="Redesign 002" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=002.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/003.png" alt="Redesign 003" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=003.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/004.png" alt="Redesign 004" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=004.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/005.png" alt="Redesign 005" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=005.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/006.png" alt="Redesign 006" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=006.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/007.png" alt="Redesign 007" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=007.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/008.png" alt="Redesign 008" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=008.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/009.png" alt="Redesign 009" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=009.png'"></div>
-                    <div class="modal-gallery-item"><img src="Job/Redesign/010.png" alt="Redesign 010" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=010.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/001.png', 'Redesign 001')"><img src="Job/Redesign/001.png" alt="Redesign 001" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=001.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/002.png', 'Redesign 002')"><img src="Job/Redesign/002.png" alt="Redesign 002" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=002.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/003.png', 'Redesign 003')"><img src="Job/Redesign/003.png" alt="Redesign 003" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=003.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/004.png', 'Redesign 004')"><img src="Job/Redesign/004.png" alt="Redesign 004" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=004.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/005.png', 'Redesign 005')"><img src="Job/Redesign/005.png" alt="Redesign 005" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=005.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/006.png', 'Redesign 006')"><img src="Job/Redesign/006.png" alt="Redesign 006" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=006.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/007.png', 'Redesign 007')"><img src="Job/Redesign/007.png" alt="Redesign 007" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=007.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/008.png', 'Redesign 008')"><img src="Job/Redesign/008.png" alt="Redesign 008" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=008.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/009.png', 'Redesign 009')"><img src="Job/Redesign/009.png" alt="Redesign 009" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=009.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/Redesign/010.png', 'Redesign 010')"><img src="Job/Redesign/010.png" alt="Redesign 010" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=010.png'"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- LIGHTBOX OVERLAY UNTUK ZOOM GAMBAR -->
+    <div class="lightbox-overlay" id="imageLightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <img id="lightboxImg" src="" alt="Zoomed Image">
+        </div>
+    </div>
+
     <script>
-        // Fungsi untuk membuka modal
+        // Fungsi untuk membuka modal detail proyek
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('active');
-                // Mencegah scroll pada body saat modal terbuka
                 document.body.style.overflow = 'hidden'; 
             }
         }
 
-        // Fungsi untuk menutup modal
+        // Fungsi untuk menutup modal detail proyek
         function closeModal(event, elementInfo) {
-            // Jika elementInfo adalah string (ID modal), ambil elemennya
             let modal = typeof elementInfo === 'string' ? document.getElementById(elementInfo) : elementInfo;
-            
             if (modal) {
                 modal.classList.remove('active');
-                // Mengembalikan fungsi scroll pada body
                 document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Fungsi untuk membuka Lightbox (Zoom Gambar)
+        function openLightbox(imgSrc, imgAlt) {
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            if (lightbox && lightboxImg) {
+                lightboxImg.src = imgSrc;
+                lightboxImg.alt = imgAlt || 'Preview';
+                lightbox.classList.add('active');
+            }
+        }
+
+        // Fungsi untuk menutup Lightbox (Zoom Gambar)
+        function closeLightbox() {
+            const lightbox = document.getElementById('imageLightbox');
+            if (lightbox) {
+                lightbox.classList.remove('active');
             }
         }
     </script>
