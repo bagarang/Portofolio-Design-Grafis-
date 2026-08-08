@@ -100,6 +100,8 @@
         .project-card:nth-child(2) { animation-delay: 0.3s; }
         .project-card:nth-child(3) { animation-delay: 0.5s; }
         .project-card:nth-child(4) { animation-delay: 0.7s; }
+        .project-card:nth-child(5) { animation-delay: 0.9s; }
+        .project-card:nth-child(6) { animation-delay: 1.1s; }
 
         .project-card:hover {
             transform: translateY(-10px);
@@ -514,7 +516,39 @@
             </div>
         </div>
 
-        <!-- PROJECT 4: PRODUCT REDESIGN -->
+        <!-- PROJECT 4: SYNEXA -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/SYNEXA/flyer01.png" alt="Synexa Flyer Project" onerror="this.src='https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">Flyer Design</span>
+                    <span class="client-info">Klien: Synexa</span>
+                </div>
+                <h3 class="project-title">Synexa Brand Flyer</h3>
+                <p class="project-desc">Project Flyer untuk brand Synexa, menampilkan desain promosi yang informatif, menarik, dan memperkuat identitas visual merek secara langsung.</p>
+                <button class="btn-view" onclick="openModal('modal-4')">View Project Detail</button>
+            </div>
+        </div>
+
+        <!-- PROJECT 5: MOMENTRA -->
+        <div class="project-card">
+            <div class="project-img">
+                <img src="Job/MOMENTRA/momentra01.png" alt="Momentra Social Ads" onerror="this.src='https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80'">
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="badge">Social Ads Flyer</span>
+                    <span class="client-info">Klien: Momentra</span>
+                </div>
+                <h3 class="project-title">Momentra Social Ads</h3>
+                <p class="project-desc">Project Social Ads Flyer yang dibuat khusus untuk kampanye periklanan digital brand Momentra di berbagai platform media sosial demi meningkatkan konversi.</p>
+                <button class="btn-view" onclick="openModal('modal-5')">View Project Detail</button>
+            </div>
+        </div>
+
+        <!-- PROJECT 6: PRODUCT REDESIGN (SEBELUMNYA PROJECT 4) -->
         <div class="project-card">
             <div class="project-img">
                 <img src="Job/Redesign/001.png" alt="Product Redesign" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&q=80'">
@@ -526,7 +560,7 @@
                 </div>
                 <h3 class="project-title">Product Redesign</h3>
                 <p class="project-desc">Transformasi dan perombakan antarmuka produk secara menyeluruh untuk mengoptimalkan pengalaman pengguna (UX) dengan standar estetika visual modern.</p>
-                <button class="btn-view" onclick="openModal('modal-4')">View Project Detail</button>
+                <button class="btn-view" onclick="openModal('modal-6')">View Project Detail</button>
             </div>
         </div>
 
@@ -703,10 +737,89 @@
         </div>
     </div>
 
-    <!-- MODAL 4: PRODUCT REDESIGN -->
+    <!-- MODAL 4: SYNEXA -->
     <div class="modal-overlay" id="modal-4" onclick="closeModal(event, this)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event, 'modal-4')">&times;</button>
+            <img src="Job/SYNEXA/flyer01.png" alt="Synexa Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>Synexa Brand Flyer</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>Synexa</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>Graphic Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Flyer Design</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    SYNEXA merupakan Project Flyer yang dirancang khusus untuk memperkuat identitas visual brand tersebut. Fokus utamanya adalah menyampaikan pesan merek secara informatif dan profesional melalui media promosi berkualitas tinggi.
+                </p>
+
+                <h3 class="modal-section-title">Flyer Design Showcase (01 - 06)</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer01.png', 'Synexa Flyer 01')"><img src="Job/SYNEXA/flyer01.png" alt="Synexa 01" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer01.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer02.png', 'Synexa Flyer 02')"><img src="Job/SYNEXA/flyer02.png" alt="Synexa 02" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer02.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer03.png', 'Synexa Flyer 03')"><img src="Job/SYNEXA/flyer03.png" alt="Synexa 03" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer03.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer04.png', 'Synexa Flyer 04')"><img src="Job/SYNEXA/flyer04.png" alt="Synexa 04" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer04.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer05.png', 'Synexa Flyer 05')"><img src="Job/SYNEXA/flyer05.png" alt="Synexa 05" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer05.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/SYNEXA/flyer06.png', 'Synexa Flyer 06')"><img src="Job/SYNEXA/flyer06.png" alt="Synexa 06" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=flyer06.png'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: MOMENTRA -->
+    <div class="modal-overlay" id="modal-5" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-5')">&times;</button>
+            <img src="Job/MOMENTRA/momentra01.png" alt="Momentra Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80'">
+            <div class="modal-body">
+                <h2>Momentra Social Ads Flyer</h2>
+                
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <h4>Client</h4>
+                        <p>Momentra</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Role</h4>
+                        <p>Digital Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Deliverables</h4>
+                        <p>Social Ads Flyer</p>
+                    </div>
+                </div>
+
+                <p class="full-desc">
+                    MOMENTRA merupakan Project Social Ads Flyer yang dibuat secara khusus untuk mengoptimalkan kampanye digital brand tersebut. Visual difokuskan pada daya tarik instan guna memaksimalkan engagement dan konversi di media sosial.
+                </p>
+
+                <h3 class="modal-section-title">Social Ads Showcase (01 - 05)</h3>
+                <div class="modal-gallery-grid">
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/MOMENTRA/momentra01.png', 'Momentra 01')"><img src="Job/MOMENTRA/momentra01.png" alt="Momentra 01" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=momentra01.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/MOMENTRA/momentra02.png', 'Momentra 02')"><img src="Job/MOMENTRA/momentra02.png" alt="Momentra 02" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=momentra02.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/MOMENTRA/momentra03.png', 'Momentra 03')"><img src="Job/MOMENTRA/momentra03.png" alt="Momentra 03" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=momentra03.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/MOMENTRA/momentra04.png', 'Momentra 04')"><img src="Job/MOMENTRA/momentra04.png" alt="Momentra 04" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=momentra04.png'"></div>
+                    <div class="modal-gallery-item" onclick="openLightbox('Job/MOMENTRA/momentra05.png', 'Momentra 05')"><img src="Job/MOMENTRA/momentra05.png" alt="Momentra 05" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=momentra05.png'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: PRODUCT REDESIGN -->
+    <div class="modal-overlay" id="modal-6" onclick="closeModal(event, this)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event, 'modal-6')">&times;</button>
             <img src="Job/Redesign/001.png" alt="Product Redesign Detail" class="modal-header-img" onclick="openLightbox(this.src, this.alt)" onerror="this.src='https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=1200&q=80'">
             <div class="modal-body">
                 <h2>Product Redesign</h2>
